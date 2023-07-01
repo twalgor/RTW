@@ -22,6 +22,7 @@ import io.github.twalgor.decomposer.SemiPID;
 import io.github.twalgor.greedy.MMAF;
 import io.github.twalgor.sieve.SubblockSieve;
 
+
 public class PIDIterative {
 //  static boolean TRACE = true;
   static boolean TRACE = false;
@@ -277,7 +278,10 @@ static boolean VERIFY = true;
   void finishBySemiPID() {
     SemiPID spid = new SemiPID(g, k, false);
     if (spid.isFeasible()) {
-      Set<XBitSet> pmcs = spid.conducives(N_CONDUCIVES);
+//      Set<XBitSet> pmcs = spid.conducives(N_CONDUCIVES);
+      TreeDecomposition td = spid.getTD();
+      td = MinimalizeTD.minimalize(td);
+      Set<XBitSet> pmcs = td.setOfBags();
       blockMap = new HashMap<>();
       pmcMap = new HashMap<>();
       queue = new PriorityQueue<>();
